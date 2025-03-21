@@ -186,3 +186,36 @@ footer nav ul {
 	margin: 2em
 }
 
+#category-menu{
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 40px;
+}
+
+.filterButton {
+    font-family: 'Syne';
+    font-size: 700;
+    color: #1D6154;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border-radius: 60px;
+    min-width: 100px;
+    cursor: pointer;
+    background-color: transparent; /* Assure un fond normal par défaut */
+    border: 2px solid #1D6154; /* Ajoute une bordure pour mieux voir */
+}
+
+/* Effet au survol */
+.filterButton:hover {
+    color: white;
+    background-color: #1D6154;
+}
+
+/* Bouton actif (cliqué) */
+.filterButtonActive {
+    color: white;
+    background-color: #1D6154;
+}
