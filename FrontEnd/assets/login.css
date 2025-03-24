@@ -1,0 +1,167 @@
+/* * LOGIN* * /
+
+/* Styles généraux */
+
+html, body {
+    height: 100%;
+    
+}
+
+
+body {
+	margin:auto;
+	font-family: 'Work Sans' ;
+	font-size: 14px;
+    background-color: #f8f6f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+/* Titre */
+h2 {
+    font-size: 55px;
+    margin-bottom: 60px;
+	display: flex;
+	justify-content: center;
+    font-family: 'syne';
+    color: #1D6154;
+}
+
+/* Champs de formulaire */
+input {
+    width: 100%;
+    height: 40px;
+    padding: 12px;
+    margin: 10px 0;
+    border: 0;
+    border-radius: 5px;
+    font-size: 16px;
+	box-shadow: 0px 2px 5px rgba(12, 8, 8, 0.1); /* Ombre légère */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+#login{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#login-form label {
+    font-weight: 500;  /* Met en gras */
+    font-size: 16px;  /* Taille du texte */
+    
+}
+
+
+/* Bouton de connexion */
+button {
+    width: 50%;
+    padding: 15px;
+    background-color: #1f5644;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 21px;
+    cursor: pointer;
+    display: block;
+    margin: 21px auto 0;
+}
+
+button:hover {
+    background-color: #174437;
+}
+
+/* Lien mot de passe oublié */
+.forgot-password {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    color: black;
+    text-decoration: underline;
+    font-size: 17px;
+}
+
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+
+/* HEADER */
+
+
+header {
+	display: flex;
+	justify-content: space-between;
+    width: 100%;
+    
+    padding: 0 50px; /* Ajoute un espace de 50px à gauche et à droite */
+    margin: 50px 0;
+    box-sizing: border-box;
+}
+
+
+h1{
+	display: flex;
+	flex-direction: column;
+	font-family: 'Syne';
+	font-size: 22px;
+	font-weight: 800;
+	color: #B1663C
+}
+
+h1 > span {
+	font-family: 'Work Sans';
+	font-size:10px;
+	letter-spacing: 0.1em;
+;
+}
+
+
+nav ul {
+	display: flex;
+	align-items: center;
+	list-style-type: none;
+    
+
+}
+nav li {
+	padding: 0 10px;
+	font-size: 1.2em;
+    text-decoration: none; /* Supprime le soulignement (utile si c'est un lien) */
+    color: inherit;
+}
+
+nav a {
+    text-decoration: none; /* Supprime le soulignement des liens */
+    color: inherit; /* Garde la couleur normale du texte */
+}
+
+li:hover {
+	font-weight: bold;
+}
+
+/* FOOTER */
+
+footer nav ul {
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em
+}
+
+main {
+    flex: 1; /* Permet d'occuper l'espace disponible pour repousser le footer en bas */
+    
+}
+
+footer {
+    width: 100%;
+    background-color: white;
+}
+
+nav .logo {
+    height: 25px; /* Ajuste la hauteur selon ta maquette */
+}

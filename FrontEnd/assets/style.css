@@ -95,6 +95,12 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav a {
+    text-decoration: none; /* Supprime le soulignement des liens */
+    color: inherit; /* Garde la couleur normale du texte */
+}
+
+
 li:hover {
 	color: #B1663C;
 }
@@ -219,3 +225,8 @@ footer nav ul {
     color: white;
     background-color: #1D6154;
 }
+
+
+
+
+
