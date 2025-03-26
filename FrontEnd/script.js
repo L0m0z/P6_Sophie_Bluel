@@ -1,20 +1,20 @@
-const gallery = document.querySelector(".gallery"); 
-const menu = document.getElementById("category-menu");
-var works;
+const gallery = document.querySelector(".gallery"); //Sélectionne l'élément HTML ayant la classe .gallery(ou il y a images et textes des travaux)
+const menu = document.getElementById("category-menu");//Sélectionne l'élément HTML ou il y aura btns filtres
+var works;// variable works qui contiendra la liste des projets récupérés depuis l'AP
 
-main();
+main();//fonction principale au chargement du script
 
-function main() {
-    fetchAndDisplayWorks();
-    manageCategories();
+function main() {//Définit la fonction principale main
+    fetchAndDisplayWorks();//Appelle fetchAndDisplayWorks() pour récupérer et afficher les projets
+    manageCategories();//Appelle manageCategories() pour gérer les catégories et ajouter les filtres
 }
 
 
 
 
-function manageCategories() {
-    fetch("http://localhost:5678/api/works")
-        .then(response => response.json())
+function manageCategories() {//la fonction qui gère les categories des filtres
+    fetch("http://localhost:5678/api/works")//envoie une requête à l'API pour récupérer les projets
+        .then(response => response.json())//convertit la réponse en JSON
         .then(works => {
             const categories = getUniqueCategories(works);
             generateCategoryMenu(categories);
