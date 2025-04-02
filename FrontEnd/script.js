@@ -38,10 +38,17 @@ async function fetchAndDisplayWorks() {
 
         works.forEach(work => {
             const projectElement = document.createElement("figure");
-            projectElement.innerHTML = `
-                <img src="${work.imageUrl}" alt="${work.title}">
-                <figcaption>${work.title}</figcaption>
-            `;
+
+            const imageElement = document.createElement("img");
+            imageElement.src = work.imageUrl;
+            imageElement.alt = work.title;
+            
+            const captionElement = document.createElement("figcaption");
+            captionElement.textContent = work.title;
+            
+            projectElement.appendChild(imageElement);
+            projectElement.appendChild(captionElement);
+            
             gallery.appendChild(projectElement);
         });
 
@@ -72,13 +79,14 @@ function generateCategoryMenu(categories) {
     allButton.classList.add("filterButton")
     allButton.classList.add("filterButtonActive")
     allButton.dataset.category = "all";
+   
     menu.appendChild(allButton);
 
     categories.forEach(category => {
         const button = document.createElement("button");
         button.textContent = category;
         button.classList.add("filterButton")
-        button.classList.add("filterButtonActive")
+        //button.classList.add("filterButtonActive")
         button.dataset.category = category;
         menu.appendChild(button);
     });
@@ -119,11 +127,13 @@ async function filterWorksByCategory(category, works) {
 function setupCategoryFilters(works) {
     const buttons = document.querySelectorAll("#category-menu button");
 
-    // Assurer que tous les boutons sont en mode "normal" au chargement
-    buttons.forEach(button => button.classList.remove("filterButtonActive"));
+   
 
     buttons.forEach(button => {
         button.addEventListener("click", () => {
+
+            
+
             // Retirer l'état actif de tous les boutons
             buttons.forEach(btn => btn.classList.remove("filterButtonActive"));
 
@@ -139,3 +149,26 @@ function setupCategoryFilters(works) {
 
 
 
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loginLink = document.querySelector("nav a[href='login.html']");
+    const editButton = document.querySelector(".edit-button"); // Bouton "Modifier"
+    const filters = document.querySelector(".filters"); // Section filtres
+
+    const token = localStorage.getItem("token"); // Vérifie si l'admin est connecté
+
+    if (token) {
+        
+        loginLink.textContent = "Logout";// Changer "Login" en "Logout"
+        loginLink.href = "#"; // Désactiver le lien vers login.html
+        loginLink.addEventListener("click", () => {
+            localStorage.removeItem("token"); // Supprime le token
+            location.reload(); // Recharge la page
+        });
+
+        // Modifier l'affichage pour l'admin
+        if (filters) filters.style.display = "none"; // Supprime les filtres
+        if (editButton) editButton.style.display = "block"; // Affiche "Modifier"
+    }
+});

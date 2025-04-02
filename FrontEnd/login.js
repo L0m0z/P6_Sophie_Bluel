@@ -20,10 +20,12 @@ document.addEventListener("DOMContentLoaded", () => {  // attend que DOM soit ch
         const data = await response.json();//objet js (data)=reponse serveur 
 
         if (response.ok) {//si la reponse est ok
-            localStorage.setItem("token", data.token); // stocke  le token dans localStorage
-            window.location.href = "admin.html"; // Redirection vers admin.html
+            sessionStorage.setItem("token", data.token); // stocke  le token dans localStorage
+            window.location.href = "./index.html"; // Redirection vers admin.html
         } else {
             errorMessage.textContent = "Identifiants incorrects."; // sinon cela affiche un message d'erreur
         }
     });
 });
+
+
