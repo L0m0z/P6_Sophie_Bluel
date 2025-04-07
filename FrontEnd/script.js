@@ -7,6 +7,7 @@ main();//fonction principale au chargement du script
 function main() {//Définit la fonction principale main
     fetchAndDisplayWorks();//Appelle fetchAndDisplayWorks() pour récupérer et afficher les projets
     manageCategories();//Appelle manageCategories() pour gérer les catégories et ajouter les filtres
+    admin();//Appelle la fonction admin() pour gérer l'affichage en mode admin
 }
 
 
@@ -37,19 +38,8 @@ async function fetchAndDisplayWorks() {
         gallery.innerHTML = "";
 
         works.forEach(work => {
-            const projectElement = document.createElement("figure");
-
-            const imageElement = document.createElement("img");
-            imageElement.src = work.imageUrl;
-            imageElement.alt = work.title;
-            
-            const captionElement = document.createElement("figcaption");
-            captionElement.textContent = work.title;
-            
-            projectElement.appendChild(imageElement);
-            projectElement.appendChild(captionElement);
-            
-            gallery.appendChild(projectElement);
+            createElement(work);
+            //createElementModale();
         });
 
         console.log("Projets affichés avec succès !");
@@ -59,6 +49,22 @@ async function fetchAndDisplayWorks() {
 }
 
 
+
+function createElement(work) {
+    const projectElement = document.createElement("figure");
+
+    const imageElement = document.createElement("img");
+    imageElement.src = work.imageUrl;
+    imageElement.alt = work.title;
+    
+    const captionElement = document.createElement("figcaption");
+    captionElement.textContent = work.title;
+    
+    projectElement.appendChild(imageElement);
+    projectElement.appendChild(captionElement);
+    
+    gallery.appendChild(projectElement);
+}
 
 // ✅ Ajout de la fonction manquante
 function getUniqueCategories(works) {
@@ -148,10 +154,35 @@ function setupCategoryFilters(works) {
 
 
 
+function admin(){
+    const loginLink = document.querySelector("nav a[href='login.html']");
+    const editButton = document.querySelector(".edit-button"); // Bouton "Modifier"
+    const filters = document.querySelector(".filters"); // Section filtres
+
+    const token = sessionStorage.getItem("token"); // Vérifie si l'admin est connecté
+
+    if (token) {
+        
+        loginLink.textContent = "Logout";// Changer "Login" en "Logout"
+        loginLink.href = "#"; // Désactiver le lien vers login.html
+        loginLink.addEventListener("click", (event) => {
+            event.preventDefault(); // Empêche le comportement par défaut du lien
+            sessionStorage.removeItem("token"); // Supprime le token
+            location.reload(); // Recharge la page
+        });
+
+        // Modifier l'affichage pour l'admin
+        if (filters) filters.style.display = "none"; // Supprime les filtres
+        if (editButton) editButton.style.display = "block"; // Affiche "Modifier"
+    }
+
+}
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
+
+
+/*document.addEventListener("DOMContentLoaded", () => {
     const loginLink = document.querySelector("nav a[href='login.html']");
     const editButton = document.querySelector(".edit-button"); // Bouton "Modifier"
     const filters = document.querySelector(".filters"); // Section filtres
@@ -171,4 +202,75 @@ document.addEventListener("DOMContentLoaded", () => {
         if (filters) filters.style.display = "none"; // Supprime les filtres
         if (editButton) editButton.style.display = "block"; // Affiche "Modifier"
     }
+});*/
+
+
+// Ajoute ce script à la fin de script.js
+
+const photoModal = document.getElementById("photoModal");
+const closeButton = document.querySelector(".close-button");
+const galleryView = document.getElementById("galleryView");
+const addPhotoView = document.getElementById("addPhotoView");
+const galleryGrid = document.getElementById("galleryGrid");
+const openAddPhoto = document.getElementById("openAddPhoto");
+const backToGallery = document.getElementById("backToGallery");
+const photoForm = document.getElementById("photoForm");
+
+// Simule une base de données de photos
+let photos = [
+  { src: "assets/images/abajour-tahina.png", title: "Abajour Tahina", category: "Salon" },
+  { src: "assets/images/appartement-paris-v.png", title: "Appartement V", category: "Cuisine" },
+];
+
+function openModal() {
+  photoModal.classList.remove("hidden");
+  showGallery();
+}
+
+function closeModal() {
+  photoModal.classList.add("hidden");
+}
+
+function showGallery() {
+  galleryView.classList.remove("hidden");
+  addPhotoView.classList.add("hidden");
+  renderGallery();
+}
+
+function showAddForm() {
+  galleryView.classList.add("hidden");
+  addPhotoView.classList.remove("hidden");
+}
+
+function renderGallery() {
+  galleryGrid.innerHTML = "";
+  photos.forEach(photo => {
+    const img = document.createElement("img");
+    img.src = photo.src;
+    img.alt = photo.title;
+    galleryGrid.appendChild(img);
+  });
+}
+
+openAddPhoto.addEventListener("click", showAddForm);
+backToGallery.addEventListener("click", showGallery);
+closeButton.addEventListener("click", closeModal);
+
+photoForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const fileInput = document.getElementById("photoInput");
+  const title = document.getElementById("photoTitle").value;
+  const category = document.getElementById("photoCategory").value;
+
+  if (fileInput.files && fileInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      photos.push({ src: e.target.result, title, category });
+      showGallery();
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  }
 });
+
+// Tu peux appeler openModal() pour afficher la modale (ex: bouton de test)
+openModal();

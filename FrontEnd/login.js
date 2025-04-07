@@ -27,5 +27,3 @@ document.addEventListener("DOMContentLoaded", () => {  // attend que DOM soit ch
         }
     });
 });
-
-
