@@ -134,6 +134,14 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
+
+.portfolio-header {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+	gap: 29px;
+}
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -309,57 +317,184 @@ input {
 
 
 /* MODAL */
-/* Modale générique */
+
 .modal {
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0, 0.3);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal.hidden {
+	display: none;
+}
+
+/* CONTENU DE LA MODALE */
+.modal-content {
+	width: 35%;
+	background-color: white;
+	border-radius: 10px;
+	padding: 45px 100px;
+	position: relative;
+	box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* BOUTON FERMER */
+.close-button {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-size: 28px;
+	cursor: pointer;
+}
+
+/* TITRES */
+.modal-content h3 {
+	text-align: center;
+	font-size: 26px;
+	margin-bottom: 60px;
+}
+
+/* GALERIE GRID */
+.gallery-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 10px;
+	margin-bottom: 90px;
+}
+
+.gallery-grid figure {
+	position: relative;
+}
+
+.gallery-grid img {
+	width: 100%;
+	border-radius: 2px;
+}
+
+/* ICONE SUPPRIMER SUR IMAGE */
+.gallery-grid .delete-icon {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	background-color: black;
+	color: white;
+	border-radius: 2px;
+	padding: 3px;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+/* BOUTON AJOUTER */
+#openAddPhoto {
+	display: block;
+	margin: 0 auto;
+	background-color: #1D6154;
+	color: white;
+	padding: 16px 64px;
+	border-radius: 60px;
+	border: none;
+	font-family: 'Syne';
+	font-size: 18px;
+	cursor: pointer;
+}
+
+/* FORMULAIRE AJOUT */
+#addPhotoView h3 {
+	margin-bottom: 55px;
+}
+
+#photoForm {
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+#photoForm label {
+	font-size: 17px;
+}
+
+#photoForm label[for="photoInput"] {
 	display: flex;
 	justify-content: center;
+}
+
+.photo-upload {
+	background-color: #e8f1f6;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 420px;
+	height: 180px;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
-	z-index: 10;
+	justify-content: center;
+	cursor: pointer;
+	gap: 10px;
+	overflow: hidden;
   }
-  
-  .modal-content {
-	background: white;
-	padding: 30px;
-	border-radius: 8px;
-	width: 600px;
-	max-height: 90vh;
-	overflow-y: auto;
-	position: relative;
-  }
-  
-  .hidden {
-	display: none;
-  }
-  
-  .close-button {
-	position: absolute;
-	top: 10px;
-	right: 15px;
-	font-size: 24px;
+
+  .photo-upload button {
+	background-color: #b9c5cc;
+	color: #306685;
+	padding: 14px 22px;
+	border-radius: 60px;
+	border: none;
+	font-family: 'Syne';
+	font-size: 14px;
 	cursor: pointer;
   }
   
-  /* Mini galerie dans modale */
-  .gallery-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, 100px);
-	gap: 10px;
-	margin-top: 15px;
+  .photo-upload .icon {
+	font-size: 40px;
+	color: #b9c5cc;
   }
   
-  .gallery-grid img {
-	width: 100%;
-	height: auto;
-	border: 1px solid #ccc;
-	border-radius: 4px;
+  .photo-upload p {
+	font-size: 12px;
+	color: #444;
   }
-  .hidden {
+
+
+#photoForm input[type="text"] {
+	padding: 10px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	border: none;
+}
+
+/* BOUTONS FORM */
+#photoForm button[type="submit"] {
+	display: block;
+	margin: 0 auto;
+	background-color: #1D6154;
+	color: white;
+	padding: 16px 64px;
+	border-radius: 60px;
+	border: none;
+	font-family: 'Syne';
+	font-size: 18px;
+	cursor: pointer;
+}
+
+
+.hidden {
 	display: none !important;
+}
+
+#galleryView, #addPhotoView {
+	transition: opacity 0.3s ease;
+}
+
+hr {
+	border: none;
+	border-top: 1px solid #B3B3B3;
+	margin: 20px 0;
   }
   

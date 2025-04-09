@@ -151,7 +151,6 @@ const galleryView = document.getElementById("galleryView");
 const addPhotoView = document.getElementById("addPhotoView");
 const galleryGrid = document.getElementById("galleryGrid");
 const openAddPhoto = document.getElementById("openAddPhoto");
-const backToGallery = document.getElementById("backToGallery");
 const photoForm = document.getElementById("photoForm");
 
 
@@ -191,7 +190,6 @@ function renderGallery() {
 
 
 openAddPhoto.addEventListener("click", showAddForm);
-backToGallery.addEventListener("click", showGallery);
 closeButton.addEventListener("click", closeModal);
 
 photoForm.addEventListener("submit", (e) => {
@@ -215,5 +213,11 @@ if (editBtn) {
     editBtn.addEventListener("click", openModal);
 }
 
+// Fermer la modale quand on clique en dehors du contenu
+photoModal.addEventListener("click", (e) => {
+    if (!e.target.closest(".modal-content")) {
+        closeModal();
+    }
+});
 
 
