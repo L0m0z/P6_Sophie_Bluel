@@ -378,7 +378,7 @@ input {
 }
 
 /* ICONE SUPPRIMER SUR IMAGE */
-.gallery-grid .delete-icon {
+.gallery-grid .material-symbols-outlined{
 	position: absolute;
 	top: 5px;
 	right: 5px;
