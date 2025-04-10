@@ -220,4 +220,10 @@ photoModal.addEventListener("click", (e) => {
     }
 });
 
+const backToGallery = document.getElementById("backToGallery");//selectionne fleche retour
+if (backToGallery) {
+	backToGallery.addEventListener("click", showGallery);//au clic retour a la galleryview
+}
+
+
 

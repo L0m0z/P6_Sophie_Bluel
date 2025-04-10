@@ -498,3 +498,15 @@ hr {
 	margin: 20px 0;
   }
   
+
+  /* La flèche */
+  .back-button {
+    position: absolute;
+    top: 23px;
+    left: 19px;
+    cursor: pointer;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    color: #333;
+}
