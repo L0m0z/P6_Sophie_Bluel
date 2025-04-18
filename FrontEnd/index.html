@@ -7,6 +7,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
@@ -16,6 +18,12 @@
 </head>
 
 <body>
+
+<div id="admin-bar" class="admin-bar">
+	<i class="fa-solid fa-pen-to-square"></i>
+	<span>Mode édition</span>
+  </div>
+  
 	<header>
 		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 		<nav>
@@ -92,9 +100,10 @@
 			<div id="galleryView">
 				<h3>Galerie</h3>
 				<div id="galleryGrid" class="gallery-grid">
-					<span class="material-symbols-outlined">
-					delete
-					</span></div>
+					<div class="iconTrash">
+						<i class="fa-solid fa-trash"></i>
+					</div>
+				</div>
 				<hr>
 				<button id="openAddPhoto">Ajouter une photo</button>
 			</div>
@@ -105,19 +114,23 @@
 				<h3>Ajouter une photo</h3>
 				<form id="photoForm">
 					<label for="photoInput">
+						<input type="file" id="photoInput" accept=".jpg, .png" style="display: none;" required>
 						<div class="photo-upload">
-						  <span class="material-symbols-outlined icon">image</span>
-						  <button>+ Ajouter une photo</button>
-						  <p>jpg, png : 4mo max</p>
+							<span class="material-symbols-outlined icon">image</span>
+							<p class="add-photo-btn">+ Ajouter une photo</p>
+							<p>jpg, png : 4mo max</p>
 						</div>
-					  </label>
-					  
+					</label>
+
 
 					<label for="photoTitle">Titre</label>
 					<input type="text" id="photoTitle" required>
 
 					<label for="photoCategory">Catégorie</label>
-					<input type="text" id="photoCategory" required>
+					<select id="photoCategory" required>
+						<option value="">-- Sélectionner une catégorie --</option>
+					</select>
+
 					<hr>
 					<button type="submit">Valider</button>
 				</form>

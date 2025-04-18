@@ -180,33 +180,148 @@ function renderGallery() {//on affiche les images des projets dans la galerie mo
     
     if (!works || works.length === 0) return;
 
-    works.forEach(photo => {
-        const img = document.createElement("img");
-        img.src = photo.imageUrl;
-        img.alt = photo.title;
-        galleryGrid.appendChild(img);
+    works.forEach(work => {
+        
+        const figureModal = document.createElement("figure");
+        const imgModal = document.createElement("img");
+        imgModal.src = work.imageUrl;
+
+        const iconTrash = document.createElement("div");
+        iconTrash.classList.add("iconTrash");
+        iconTrash.innerHTML= "<i class= 'fa-solid fa-trash'></i>";
+
+        figureModal.appendChild(imgModal);
+        figureModal.appendChild(iconTrash);
+        galleryGrid.appendChild(figureModal);
+
+        iconTrash.addEventListener("click" , (e)=>{//ajout d'un event au click de corbeille 
+           e.preventDefault();
+           deleteWorks(work.id);
+        });
+        
+        
     });
 }
+
+async function deleteWorks(workId) {
+    const adminToken = sessionStorage.getItem("token");
+    try {
+        if (window.confirm("Êtes vous sûr de vouloir effacer ce projet?")) {
+            let response = await fetch(`http://localhost:5678/api/works/${workId}`, {
+                method: "DELETE",
+                headers: {
+                    accept: "*/*",
+                    Authorization: `Bearer ${adminToken}`,
+                },
+            });
+
+            if (response.ok) {
+                console.log("Projet supprimé avec succès.");
+                fetchAndDisplayWorks();
+                renderGallery();
+            } else if (response.status === 401) {
+                console.error("Non autorisé à effectuer cette action.");
+            }
+        }
+    } catch (error) {
+        console.error("Erreur lors de la requête:", error);
+    }
+}
+
+// ======= Ajout d’un projet =======
+async function addWorks(file, title, categoryId) {
+    const adminToken = sessionStorage.getItem("token");
+
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("title", title);
+    formData.append("category", categoryId);
+
+    try {
+        const response = await fetch("http://localhost:5678/api/works", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${adminToken}`,
+            },
+            body: formData,
+        });
+
+        if (response.ok) {
+            const newWork = await response.json();
+            console.log("Projet ajouté :", newWork);
+            await fetchAndDisplayWorks();
+            renderGallery();
+            return newWork;
+        } else {
+            console.error("Erreur lors de l’ajout :", response.status);
+        }
+    } catch (error) {
+        console.error("Erreur lors de la requête :", error);
+    }
+}
+
+// ======= Formulaire d'ajout de photo =======
+photoForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const file = document.getElementById("photoInput").files[0];
+    const title = document.getElementById("photoTitle").value.trim();
+    const category = document.getElementById("photoCategory").value;
+
+    if (!file || !title || !category) return;
+
+    const newWork = await addWorks(file, title, category);
+
+    if (newWork) {
+        photoForm.reset();
+        checkFormValidity();
+        showGallery();
+    }
+});
+
+// ======= Remplir dynamiquement le select des catégories =======
+async function populateCategorySelect() {
+    const select = document.getElementById("photoCategory");
+    try {
+        const response = await fetch("http://localhost:5678/api/categories");
+        const categories = await response.json();
+
+        categories.forEach(cat => {
+            const option = document.createElement("option");
+            option.value = cat.id;
+            option.textContent = cat.name;
+            select.appendChild(option);
+        });
+    } catch (error) {
+        console.error("Erreur lors de la récupération des catégories :", error);
+    }
+}
+
+// ======= Activation du bouton Valider (si tout est rempli) =======
+const photoInput = document.getElementById("photoInput");
+const titleInput = document.getElementById("photoTitle");
+const categoryInput = document.getElementById("photoCategory");
+const submitBtn = photoForm.querySelector("button[type='submit']");
+
+function checkFormValidity() {
+    const file = photoInput.files[0];
+    const title = titleInput.value.trim();
+    const category = categoryInput.value;
+
+    const isValid = file && title && category;
+    submitBtn.disabled = !isValid;
+    submitBtn.style.backgroundColor = isValid ? "#1D6154" : "#A7A7A7";
+}
+
+photoInput.addEventListener("change", checkFormValidity);
+titleInput.addEventListener("input", checkFormValidity);
+categoryInput.addEventListener("change", checkFormValidity);
 
 
 openAddPhoto.addEventListener("click", showAddForm);
 closeButton.addEventListener("click", closeModal);
 
-photoForm.addEventListener("submit", (e) => {//formulaire d'ajout photo
-    e.preventDefault();//empeche le rechargement page
-    const fileInput = document.getElementById("photoInput");
-    const title = document.getElementById("photoTitle").value;
-    const category = document.getElementById("photoCategory").value;
 
-    if (fileInput.files && fileInput.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            photos.push({ src: e.target.result, title, category });
-            showGallery();
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-    }
-});
 
 const editBtn = document.querySelector(".edit-button");
 if (editBtn) {//si on clique sur modifer cela ouvre modale
@@ -226,4 +341,25 @@ if (backToGallery) {
 }
 
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    populateCategorySelect();
+    checkFormValidity(); // initialise l'état du bouton Valider au chargement
+});
+
+// Empêche le bouton dans le label d'interférer avec l'ouverture du sélecteur de fichier
+document.querySelector(".photo-upload").addEventListener("click", (e) => {
+    e.preventDefault(); // empêche un comportement inattendu
+    document.getElementById("photoInput").click(); // ouvre le selecteur de fichiers
+});
+
+
+
+// Active la barre uniquement si l'utilisateur est connecté en admin
+const isAdmin = true; // à remplacer par ta propre logique (ex : token présent)
+
+if (isAdmin) {
+  document.body.classList.add("admin-mode");
+  // La barre est déjà dans le HTML, donc rien à ajouter ici si tu la laisses statique
+}
 
