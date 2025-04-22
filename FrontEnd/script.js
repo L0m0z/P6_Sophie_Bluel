@@ -104,7 +104,7 @@ function setupCategoryFilters(works) {
 }
 
 // ======= Affiche les projets selon la catégorie =======
-async function filterWorksByCategory(category, works) {
+function filterWorksByCategory(category, works) {
     gallery.innerHTML = "";//on vide gallery
 
     const response = await fetch("http://localhost:5678/api/works");
